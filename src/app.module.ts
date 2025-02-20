@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { LowdbService } from './lowdb/lowdb.service';
-import { LowdbModule } from './lowdb/lowdb.module';
+
 import { TodosModule } from './todos/todos.module';
+// import { NedbService } from './database/nedb.service';
 
 @Module({
-  imports: [LowdbModule, TodosModule],
+  imports: [TodosModule],
   controllers: [AppController],
-  providers: [AppService, LowdbService],
+  providers: [AppService],
 })
 export class AppModule {}

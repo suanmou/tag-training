@@ -22,21 +22,22 @@ export class TodosController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.todosService.findOne(id);
+    return this.todosService.findById(id);
   }
 
   @Post()
-  create(@Body() todo: Omit<Todo, 'id' | 'createdAt'>) {
+  //   create(@Body() todo: Omit<Todo, 'id' | 'createdAt'>) {
+  create(@Body() todo: Todo) {
     return this.todosService.create(todo);
   }
 
-  @Put(':id')
-  update(@Param('id') id: string, @Body() updateData: Partial<Todo>) {
-    return this.todosService.update(id, updateData);
-  }
+  //   @Put(':id')
+  //   update(@Param('id') id: string, @Body() updateData: Partial<Todo>) {
+  //     return this.todosService.update(id, updateData);
+  //   }
 
-  @Delete(':id')
-  delete(@Param('id') id: string) {
-    return this.todosService.delete(id);
-  }
+  //   @Delete(':id')
+  //   delete(@Param('id') id: string) {
+  //     return this.todosService.delete(id);
+  //   }
 }

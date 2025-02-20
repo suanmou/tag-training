@@ -1,37 +1,25 @@
 // src/todos/todos.service.ts
-import { Injectable } from '@nestjs/common';
-import { LowdbService } from '../lowdb/lowdb.service';
+import { Inject, Injectable } from '@nestjs/common';
 import { Todo } from './todo.interface';
+import { NedbService } from 'src/database/nedb.service';
 
 @Injectable()
 export class TodosService {
-  private readonly collection = 'todos';
+  constructor(
+    @Inject('DB_TODOS') // 注入对应的令牌
+    private readonly dbService: NedbService<Todo>,
+  ) {}
 
-  constructor(private readonly lowdbService: LowdbService) {}
-
-  async findAll(filter?: Partial<Todo>): Promise<Todo[]> {
-    return this.lowdbService.find(this.collection, filter);
+  //   async create(todo: Omit<Todo, 'id' | 'createdAt'>) {
+  async create(todo: Todo) {
+    return this.dbService.insert(todo);
   }
 
-  async findOne(id: string): Promise<Todo | undefined> {
-    return this.lowdbService.findOne(this.collection, id);
+  async findAll() {
+    return this.dbService.find({});
   }
 
-  async create(todo: Omit<Todo, 'id' | 'createdAt'>): Promise<Todo> {
-    return this.lowdbService.create(this.collection, {
-      ...todo,
-      createdAt: new Date(),
-    });
-  }
-
-  async update(
-    id: string,
-    updateData: Partial<Todo>,
-  ): Promise<Todo | undefined> {
-    return this.lowdbService.update(this.collection, id, updateData);
-  }
-
-  async delete(id: string): Promise<boolean> {
-    return this.lowdbService.delete(this.collection, id);
+  async findById(id: string) {
+    return this.dbService.find({ _id: id });
   }
 }

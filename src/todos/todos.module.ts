@@ -2,10 +2,10 @@
 import { Module } from '@nestjs/common';
 import { TodosController } from './todos.controller';
 import { TodosService } from './todos.service';
-import { LowdbModule } from '../lowdb/lowdb.module';
+import { DatabaseModule } from '../database/database.module';
 
 @Module({
-  imports: [LowdbModule],
+  imports: [DatabaseModule],
   controllers: [TodosController],
   providers: [TodosService],
 })
